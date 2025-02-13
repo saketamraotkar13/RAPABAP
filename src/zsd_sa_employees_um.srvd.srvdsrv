@@ -1,0 +1,4 @@
+@EndUserText.label: 'sd for um emloyees'
+define service Zsd_sa_employees_UM {
+  expose zsa_c_employees_u as Employee;
+}

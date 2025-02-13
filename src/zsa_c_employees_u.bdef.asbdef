@@ -1,0 +1,63 @@
+unmanaged implementation in class zbp_sa_c_employees_u unique;
+strict ( 2 );
+with draft;
+define behavior for zsa_c_employees_u alias Employees
+draft table zsa_employees_d
+//late numbering
+early numbering
+lock master total etag EditedAt
+authorization master ( instance )
+etag master EditedAt
+
+
+{
+  create;
+  update (features : instance);
+  delete (features : instance);
+  field ( readonly ) id, EmpId;
+  field (mandatory) LastName , age, salary;
+
+//  action setAliveStatus parameter zsa_a_alive_u result [1] $self;
+//  action UpdateCountry parameter zsa_a_country result [1] $self;
+  validation validate_mandatory_fields on save {create;update;}
+
+  determination setSrCitizen on save {field Age;}
+  determination setAlive on modify {field Gender;}
+  side effects { field Gender affects field Alive;}
+
+//field (readonly : update)id;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard ;
+  draft action Resume;
+  draft determine action Prepare{
+    validation validate_mandatory_fields;
+    determination setSrCitizen;
+  }
+
+
+
+
+//field Mapping with table and cds
+mapping for zsa_employees
+    {
+        id = id;
+        Age = age;
+        Alive = alive;
+        CountryCode = country_code;
+        EditedAt = editedat;
+        EditedBy = editedby;
+        Email = email;
+        EmpId = emp_id;
+        FirstName = first_name;
+        Gender = gender;
+        LastName = last_name;
+        Locallastchangedat = locallastchangedat;
+        Salary = salary;
+        SrCitizen = sr_citizen;
+        Taxable = taxable;
+    }
+
+
+}
